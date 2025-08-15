@@ -1,7 +1,11 @@
-# SIMDISPAT (R) — Multiple-Point Simulation via `snesim`
+# SIMDISPAT (R) — Multiple-Point Simulation 
 
-Geostatistical simulation code accompanying a submission to *Computers & Geosciences*.  
-This repository provides an R implementation of an MPS approach focused on **pattern similarity** and **distance**, using **`snesim`** as the main entry point. If needed, you may keep a thin compatibility wrapper `simdispat()` that simply calls `snesim()` so that manuscript examples remain valid.
+Geostatistical simulation code accompanying a submission to *Computers & Geosciences*.
+
+This repository provides an **R implementation** of a Multiple-Point Simulation (MPS) approach focused on **pattern similarity** and **distance**.  
+Although the main function retains the name `snesim`, it has been **heavily modified** compared to classical implementations. The name was kept for historical reasons, but its internal logic reflects the innovations introduced in SIMDISPAT.
+
+One of the key innovations in SIMDISPAT is the introduction of the **`patpercent`** argument, which allows selecting a percentage of patterns from the training image (TI) via simple random sampling without replacement. For example, in a two-dimensional 5×5 template and `patpercent = 33%`, if the TI contains 49 total patterns, only 16 will be randomly selected for simulation.
 
 > Core functions (R): `snesim`, `PatterBase`, `scanTemplate`, `AssignData`, `getDataEvent`, `AssignWeight`, `similarPattern`, `disDistance`, `pastePattern`, `coordTemplate`, `RelocateData`, `getindx`, `SortTemplate`, `setRotMat`, `InitializeSearch`, `updateTree`, `SimulationPath`.
 
@@ -30,7 +34,7 @@ To comply with the journal’s “Computer Code Availability” requirements:
 
 Install suggested packages (once):
 ```r
-install.packages("ggplot2")
+install.packages("ggplot2") Everything else (file reading, matrix handling, calculations, loops) is implemented using R base functions (read.table, matrix, for, ifelse, etc.), without relying on external libraries for the core logic.
 ```
 
 ---
