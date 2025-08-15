@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Morales Rodriguez"
+    given-names: "Karla"
+    orcid: "0000-0000-0000-0000"
+title: "SIMDISPAT: A SIMILARITY- AND DISTANCE-BASED ALGORITHM FOR MULTIPOINT SIMULATION OF CATEGORICAL AND CONTINUOUS DATA."
+version: "1.0.0"
+date-released: 2025-08-14
+url: "https://github.com/kaximor8/SIMDISPAT-code"
+license: "MIT"

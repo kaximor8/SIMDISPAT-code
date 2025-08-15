@@ -8,7 +8,9 @@ data=as.matrix(read.table('./Datos_muestreados/categoric.dat',comment.char='%', 
 typedata = 0           # tipo de datos 0-categoricos, 1-continuos
 typedist = 0           # si la distancia escogida es Manhattan es = 0; si es Euclidiana = 1
 seed = 689558
-
+#689558
+#689567
+#dbgfl = 'snesim.dbg'
 nsim = 2
 
 #Especificacion de la malla X
@@ -80,7 +82,7 @@ sanis2 = radius2/radius
 sanis = c(sanis1,sanis2)
 
 # Lectura de funciones
-source(".\\simdispat.R")
+source(".\\snesim.R")
 source(".\\RelocateData.R")
 source(".\\getindx.R")
 source(".\\setRotMat.R")
@@ -98,9 +100,38 @@ source(".\\pastePattern.R")
 
 # Multiplas realizacoes
 results = 
-  simdispat(data,nx,xmn,xsiz,ny,ymn,ysiz,nz,zmn,zsiz,
+  snesim(data,nx,xmn,xsiz,ny,ymn,ysiz,nz,zmn,zsiz,
          nxyz,trainfl,nxtr,nytr,nztr,ivrltr,nxytr,nxyztr,templatefl,innerPatch,
          nmult,radius,angles,sanis,nsim,seed,nxT,nyT,nzT,w1,w2,w3,
          typedata,typedist, dbtol,patpercent)
+
+
+# E-type
+library(gridExtra)
+
+library(ggplot2)
+
+df = data.frame(x = data[,1], y = data[,2], z = data[,3], V1 = data[,4])
+df$V1 <- factor(df$V1 )
+g1 = ggplot() + geom_point(data = df, aes(x, y, color = V1)) + theme_classic()g1=ggplot(df, aes(x = x, y = y, color = factor(V1, labels = c("Xisto","Areia","Dique","Fenda")))) +
+  geom_point()+ labs(color = "Facies")+theme_light()+
+  scale_color_manual(values=c("gray48", "gold2", "firebrick4","aquamarine3"))
+
+avg=rowMeans(results)
+xloc  = rep(seq(1,101), 101)
+yloc  = rep(seq(1,101), each = 101)
+etype  = data.frame(x = xloc, y = yloc, Litologia = avg)
+
+
+g2 =  ggplot() + geom_tile(data = etype, aes(x, y, fill = Litologia)) +
+    theme_classic()+
+    scale_fill_distiller(palette = "Greys") 
+gridExtra::grid.arrange(g1, g2, nrow = 1)
+
+
+# Escribir los resultados en un archivo de extension csv
+
+write.csv(x=results, file = "streManha2_15_9.dat",row.names = FALSE)
+write.csv(x=etype, file = "stManhtype2_15_9.dat",row.names = FALSE)
 
 
