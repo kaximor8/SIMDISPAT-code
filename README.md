@@ -1,4 +1,4 @@
-# SIMDISPAT (R) — Multiple-Point Simulation 
+# SIMDISPAT (R) — Similarity- and Distance-based Algorithm for Multiple Point Simulation of Patterns".
 
 Geostatistical simulation code accompanying a submission to *Computers & Geosciences*.
 
